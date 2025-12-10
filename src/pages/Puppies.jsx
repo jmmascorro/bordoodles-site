@@ -81,8 +81,10 @@ export default function Puppies() {
     const [puppies, setPuppies] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
     useEffect(() => {
-        fetch('http://localhost:3000/api/puppies')
+        fetch(`${API_URL}/api/puppies`)
             .then(res => res.json())
             .then(data => {
                 setPuppies(data);
