@@ -19,10 +19,34 @@ export default function Contact() {
         }
     }, [location.state]);
 
-    const handleSubmit = (e) => {
+    const [status, setStatus] = useState('');
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert('Thank you for your message! We will get back to you shortly.');
-        setFormData({ name: '', email: '', message: '' });
+        setStatus('sending');
+
+        try {
+            const response = await fetch("https://formspree.io/f/manrpkjg", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                setStatus('success');
+                setFormData({ name: '', email: '', message: '' });
+                alert('Thank you! Your message has been sent successfully.');
+            } else {
+                setStatus('error');
+                alert("Oops! There was a problem submitting your form.");
+            }
+        } catch (error) {
+            setStatus('error');
+            alert("Oops! There was a problem submitting your form.");
+        }
     };
 
     return (
@@ -82,7 +106,9 @@ export default function Contact() {
                             required
                         ></textarea>
                     </div>
-                    <button type="submit" className="btn-primary">Send Message</button>
+                    <button type="submit" className="btn-primary" disabled={status === 'sending'}>
+                        {status === 'sending' ? 'Sending...' : 'Send Message'}
+                    </button>
                 </form>
             </div>
         </div>

@@ -7,7 +7,7 @@ export default function Parents() {
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
     useEffect(() => {
-         fetch(`${API_URL}/api/parents`)
+        fetch(`${API_URL}/api/parents`)
             .then(res => res.json())
             .then(data => {
                 setParents(data);
