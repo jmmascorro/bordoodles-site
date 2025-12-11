@@ -25,8 +25,9 @@ function PuppyCard({ puppy }) {
     const getImageUrl = (path) => {
         if (!path) return '';
         if (path.startsWith('http')) return path;
-        // Access the API_URL from the parent context context or import
+
         const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+        console.log('🖼️ Image Debug:', { path, API_URL, result: `${API_URL}${path}` }); // Debug Log
         return `${API_URL}${path}`;
     };
 
