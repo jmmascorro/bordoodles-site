@@ -20,7 +20,17 @@ function PuppyCard({ puppy }) {
 
     /* Fallback if images array is empty or undefined (backward compatibility) */
     const displayImages = puppy.images && puppy.images.length > 0 ? puppy.images : [puppy.image];
-    const currentImage = displayImages[currentImageIndex];
+
+    // Helper to resolve image URL
+    const getImageUrl = (path) => {
+        if (!path) return '';
+        if (path.startsWith('http')) return path;
+        // Access the API_URL from the parent context context or import
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+        return `${API_URL}${path}`;
+    };
+
+    const currentImage = getImageUrl(displayImages[currentImageIndex]);
 
     const handleInquiry = () => {
         // Navigate to contact page with puppy details

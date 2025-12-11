@@ -34,7 +34,11 @@ export default function Parents() {
                 {parents.map((parent) => (
                     <div key={parent.id} className="puppy-card">
                         <div className="card-image-container">
-                            <img src={parent.image} alt={parent.name} className="card-image" />
+                            <img
+                                src={parent.image?.startsWith('http') ? parent.image : `${API_URL}${parent.image}`}
+                                alt={parent.name}
+                                className="card-image"
+                            />
                             <div className="status-badge available" style={{ background: '#e2e8f0', color: '#1e293b' }}>
                                 {parent.role}
                             </div>
